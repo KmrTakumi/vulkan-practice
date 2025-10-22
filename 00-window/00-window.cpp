@@ -1,67 +1,57 @@
 #include <GLFW/glfw3.h>
 
+#include <cstdlib>
 #include <iostream>
 #include <stdexcept>
-#include <cstdlib>
 
 constexpr uint32_t WIDTH = 800;
 constexpr uint32_t HEIGHT = 600;
 
-class HelloTriangleApplication
-{
+class HelloTriangleApplication {
 public:
-    void run()
-    {
-        initWindow();
-        initVulkan();
-        mainLoop();
-        cleanup();
-    }
+  void run() {
+    initWindow();
+    initVulkan();
+    mainLoop();
+    cleanup();
+  }
 
 private:
-    GLFWwindow *window = nullptr;
+  GLFWwindow* window = nullptr;
 
-    void initWindow()
-    {
-        glfwInit();
+  void initWindow() {
+    glfwInit();
 
-        glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-        glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
+    glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+    glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
 
-        window = glfwCreateWindow(WIDTH, HEIGHT, "vulkan", nullptr, nullptr);
+    window = glfwCreateWindow(WIDTH, HEIGHT, "vulkan", nullptr, nullptr);
+  }
+
+  void initVulkan() {}
+
+  void mainLoop() {
+    while (!glfwWindowShouldClose(window)) {
+      glfwPollEvents();
     }
+  }
 
-    void initVulkan() {}
+  void cleanup() {
+    glfwDestroyWindow(window);
 
-    void mainLoop()
-    {
-        while (!glfwWindowShouldClose(window))
-        {
-            glfwPollEvents();
-        }
-    }
-
-    void cleanup()
-    {
-        glfwDestroyWindow(window);
-
-        glfwTerminate();
-    }
+    glfwTerminate();
+  }
 };
 
-int main()
-{
-    HelloTriangleApplication app;
+int main() {
+  HelloTriangleApplication app;
 
-    try
-    {
-        app.run();
-    }
-    catch (const std::exception &e)
-    {
-        std::cerr << e.what() << std::endl;
-        return EXIT_FAILURE;
-    }
+  try {
+    app.run();
+  } catch (const std::exception& e) {
+    std::cerr << e.what() << std::endl;
+    return EXIT_FAILURE;
+  }
 
-    return EXIT_SUCCESS;
+  return EXIT_SUCCESS;
 }
